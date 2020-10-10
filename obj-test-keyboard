@@ -46,18 +46,18 @@
 		      },
 		      methods: {
 			  init: function() {
-			  this.initScene()//场景对象
-			  this.initCamera()//相机
-			  this.initWebGLRenderer()//渲染器
-			  this.initAxisHelper()//辅助坐标
+			  this.initScene()//scene
+			  this.initCamera()//camera
+			  this.initWebGLRenderer()//renderer
+			  this.initAxisHelper()//axis helper
 			  this.render()
-			  this.createControls()//控件对象
+			  this.createControls()//control
 			  this.Box()
-			  this.initControls()//相机视角
-			  this.initPlane()//地板
-			  this.initMobile()//移动
+			  this.initControls()
+			  this.initPlane()//plane
+			  this.initMobile()//movement
 			  },
-			  //鼠标控制移动相机视角*****
+			  //mouse control the angle of view
 			  initControls(){
 			  let that=this
 			  that.controls = new PointerLockControls( this.camera, document.body );
@@ -225,7 +225,7 @@
 
 		}
 	  
-			  //从这开始下面**就是控制移动的代码
+			  //coding for control the movement
 			  let time = performance.now();
 			  let delta = ( time - that.prevTime ) / 1000;
 	  
@@ -238,12 +238,12 @@
 			  that.velocity.z -= that.direction.z * 400.0 * delta;
 			  that.velocity.x -= that.direction.x * 400.0 * delta;
 	  
-			  //下面两个&&是判断是否有moveRight。如果有就执行。不然没加载完毕，就循环执行会报错
+			  //&& is to judege if there has moveRight.if it has then keep loading otherwise will have the syntaxerror
 			  that.controls && that.controls.moveRight(- that.velocity.x * delta)
 			  that.controls && that.controls.moveForward(- that.velocity.z * delta)
 			  that.prevTime = time;
 			 },
-			// 创建控件对象
+			
 			createControls () {
 			  this.controls = new OrbitControls(this.camera,this.renderer.domElement)
 			}
