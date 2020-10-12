@@ -1,1 +1,78 @@
+let lang = navigator.language || 'en-US';
+let speechRec = new p5.SpeechRec(lang, gotSpeech);
+let continuous = true, interim = true;
+var bg;
+var set = {};
+let img1;
+//const keyword = happy;
 
+
+function preload() {
+
+  img1=loadImage('img/1.png');
+
+  bg = loadImage('img/bg.png');
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(bg);
+  frameRate(2);
+  speechInit();
+  // wordMatch('vanity')
+
+}
+
+
+function speechInit() {
+  speechRec.onResult = function () {
+
+    if (speechRec.resultValue === true) {
+      let word = speechRec.resultString;
+      console.log(set);
+      if (!set[word]) {
+        set[word] = true;
+        wordMatch(word);
+      }
+    }
+  };
+  speechRec.onEnd = function () {
+    speechRec.start(continuous, interim);
+  }
+  speechRec.start(continuous, interim);
+}
+
+
+function popImage() { 
+
+  let minX = windowWidth * 0.30, minY = windowHeight * 0.16;
+  let maxX = minX + 350, maxY = minY + 320;
+  let x = abs(random(minX, maxX));
+  let y = abs(random(minY, maxY));
+  let w = abs(random(150, 200));
+  //  let w = abs(random(250, 300));
+  let h = abs(random(150, 200));
+  image(img1, x, y, w, h);//random size
+}
+
+function gotSpeech() {
+  if (speechRec.resultValue) {
+    createP(speechRec.resultString);
+  }
+  fill(255);
+}
+
+
+function wordMatch(speech) {
+ // const keyword = happy;
+  console.log(speech);
+  let result = [];
+  let words = keyword('happy');
+  let m = match(speech, words);
+      if (m) {
+        popImage(img1);
+      }
+    
+  
+}
+//const keyword = happy;
